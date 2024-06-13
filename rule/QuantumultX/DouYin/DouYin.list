@@ -6,8 +6,8 @@
 # HOST-SUFFIX: 11
 # TOTAL: 13
 #头条系
-HOST,lf3-static.bytednsdoc.com,DouYin
-HOST,v5-dy-o-abtest.zjcdn.com,DouYin
+HOST-SUFFIX,bytednsdoc.com,DouYin
+HOST-SUFFIX,zjcdn.com,DouYin
 HOST-SUFFIX,amemv.com,DouYin
 HOST-SUFFIX,douyincdn.com,DouYin
 HOST-SUFFIX,douyinpic.com,DouYin
