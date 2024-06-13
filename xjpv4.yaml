@@ -1,0 +1,125 @@
+port: 7890
+allow-lan: true
+mode: rule
+log-level: info
+unified-delay: true
+global-client-fingerprint: chrome
+dns:
+  enable: true
+  listen: :53
+  ipv6: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  default-nameserver: 
+    - 223.5.5.5
+    - 8.8.8.8
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  fallback:
+    - https://1.0.0.1/dns-query
+    - tls://dns.google
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
+
+proxies:
+- name: vless-reality-vision-xjpv4               
+  type: vless
+  server: 152.69.218.156                           
+  port: 12826                                
+  uuid: fe8a9888-2be1-4498-b423-d7502a9ec322   
+  network: tcp
+  udp: true
+  tls: true
+  flow: xtls-rprx-vision
+  servername: www.yahoo.com                 
+  reality-opts: 
+    public-key: 9xtFOibGU1GlA9ZiK2oG76asaWeVCQEe21X31TaX43Y    
+    short-id: '57eb305d'                    
+  client-fingerprint: chrome                  
+
+- name: vmess-ws-xjpv4                         
+  type: vmess
+  server: 152.69.218.156                        
+  port: 2082                                     
+  uuid: fe8a9888-2be1-4498-b423-d7502a9ec322       
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: false
+  network: ws
+  servername: www.bing.com                    
+  ws-opts:
+    path: "fe8a9888-2be1-4498-b423-d7502a9ec322-vm"                             
+    headers:
+      Host: www.bing.com                     
+
+
+
+
+
+- name: hysteria2-xjpv4                            
+  type: hysteria2                                      
+  server: 152.69.218.156                               
+  port: 32615                                
+  password: fe8a9888-2be1-4498-b423-d7502a9ec322                          
+  alpn:
+    - h3
+  sni: www.bing.com                               
+  skip-cert-verify: true
+  fast-open: true
+
+- name: tuic5-xjpv4                            
+  server: 152.69.218.156                      
+  port: 2417                                    
+  type: tuic
+  uuid: fe8a9888-2be1-4498-b423-d7502a9ec322       
+  password: fe8a9888-2be1-4498-b423-d7502a9ec322   
+  alpn: [h3]
+  disable-sni: true
+  reduce-rtt: true
+  udp-relay-mode: native
+  congestion-controller: bbr
+  sni: www.bing.com                                
+  skip-cert-verify: true
+
+proxy-groups:
+- name: 负载均衡
+  type: load-balance
+  url: https://www.gstatic.com/generate_204
+  interval: 300
+  strategy: round-robin
+  proxies:
+    - vless-reality-vision-xjpv4                              
+    - vmess-ws-xjpv4
+    - hysteria2-xjpv4
+    - tuic5-xjpv4
+
+- name: 自动选择
+  type: url-test
+  url: https://www.gstatic.com/generate_204
+  interval: 300
+  tolerance: 50
+  proxies:
+    - vless-reality-vision-xjpv4                              
+    - vmess-ws-xjpv4
+    - hysteria2-xjpv4
+    - tuic5-xjpv4
+    
+- name: 🌍选择代理节点
+  type: select
+  proxies:
+    - 负载均衡                                         
+    - 自动选择
+    - DIRECT
+    - vless-reality-vision-xjpv4                              
+    - vmess-ws-xjpv4
+    - hysteria2-xjpv4
+    - tuic5-xjpv4
+rules:
+  - GEOIP,LAN,DIRECT
+  - GEOIP,CN,DIRECT
+  - MATCH,🌍选择代理节点
