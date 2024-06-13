@@ -1,10 +1,11 @@
 # NAME: DouYin
 # AUTHOR: blackmatrix7
 # REPO: https://github.com/blackmatrix7/ios_rule_script
-# UPDATED: 2024-04-29 13:36:21
+# UPDATED: 2024-06-13
 # HOST: 2
 # HOST-SUFFIX: 11
 # TOTAL: 13
+#头条系
 HOST,lf3-static.bytednsdoc.com,DouYin
 HOST,v5-dy-o-abtest.zjcdn.com,DouYin
 HOST-SUFFIX,amemv.com,DouYin
@@ -18,3 +19,12 @@ HOST-SUFFIX,ixiguavideo.com,DouYin
 HOST-SUFFIX,pstatp.com,DouYin
 HOST-SUFFIX,snssdk.com,DouYin
 HOST-SUFFIX,toutiao.com,DouYin
+HOST-SUFFIX,toutiaovod.com,DouYin
+HOST-SUFFIX,bdxiguastatic.com,DouYin
+HOST-SUFFIX,byteimg.com,DouYin
+HOST-SUFFIX,toutiaoimg.com,DouYin
+HOST-SUFFIX,bytegecko.com,DouYin
+HOST-SUFFIX,pglstatp-toutiao.com,DouYin
+
+
+
